@@ -1,0 +1,35 @@
+<?php
+/**
+ * Copy this file to config.php and fill in real values.
+ * config.php itself is never meant to be shared/committed — it's blocked from
+ * direct web access by api/.htaccess, but keep it out of any public upload too.
+ */
+
+// --- Database (MySQL on the live server; see db.php for the local SQLite fallback) ---
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'chefched_db');
+define('DB_USER', 'chefched_user');
+define('DB_PASS', 'REPLACE_ME');
+
+// --- Admin notification destinations ---
+define('NOTIFY_EMAIL_TO', 'chefched@example.com');   // where enquiry/contact emails are sent
+define('NOTIFY_EMAIL_FROM', 'noreply@example.com');  // must be a real mailbox on your domain
+
+// --- SMTP (create this mailbox via cPanel > Email Accounts) ---
+define('SMTP_HOST', 'mail.example.com');
+define('SMTP_PORT', 587);
+define('SMTP_USER', 'noreply@example.com');
+define('SMTP_PASS', 'REPLACE_ME');
+define('SMTP_SECURE', 'tls'); // 'tls' or 'ssl'
+
+// --- CallMeBot WhatsApp notification ---
+// 1. Save this number in your phone's WhatsApp contacts: +34 644 20 47 56 (CallMeBot's number)
+// 2. Send it the message: "I allow callmebot to send me messages"
+// 3. CallMeBot replies with your personal API key — put it below along with your own WhatsApp number.
+define('WHATSAPP_PHONE', '254XXXXXXXXX');  // Chef Ched's own number, international format, no '+'
+define('WHATSAPP_API_KEY', 'REPLACE_ME');
+define('WHATSAPP_ENABLED', true);
+
+// --- Misc ---
+define('APP_ENV', 'production'); // 'local' enables verbose errors + logs instead of sending real notifications
+define('RATE_LIMIT_MAX_PER_HOUR', 5); // per-IP submissions across both public forms

@@ -1,0 +1,13 @@
+# Block direct access to internals — only enquiry.php, contact.php, and
+# admin/*.php are meant to be requested directly.
+# (Both directives included: "Require" for Apache 2.4+, "Order/Deny" for
+# older 2.2-style configs some budget shared hosts still run.)
+<FilesMatch "^(config\.php|config\.php\.sample|db\.php|migrate\.php)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>

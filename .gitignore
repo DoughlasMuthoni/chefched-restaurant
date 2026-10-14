@@ -1,0 +1,22 @@
+# Secrets — never commit real DB/SMTP/WhatsApp credentials
+api/config.php
+
+# Local dev database
+api/data/
+
+# Node
+admin-dashboard/node_modules/
+admin-dashboard/dist/
+
+# OS/editor noise
+.DS_Store
+
+# Production secrets (live DB/SMTP passwords) — keep a copy outside git
+api/config.production.php
+
+# Composer deps (restore with: cd api && composer install)
+api/vendor/
+
+# Local tool/editor folders
+.claude/
+.vscode/

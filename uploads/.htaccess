@@ -1,0 +1,16 @@
+# This directory only ever holds images from api/admin/upload.php. Even
+# though that endpoint already validates real image content and forces a
+# safe generated filename/extension, never execute anything here as a
+# defense-in-depth backstop.
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<FilesMatch "\.(php|phtml|php[3-8]?|phar|cgi|pl)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>

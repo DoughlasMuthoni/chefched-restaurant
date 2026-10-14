@@ -1,0 +1,28 @@
+DirectoryIndex index.php index.html
+
+RewriteEngine On
+
+# If a browser requests a page WITH ".html" or ".php" in the URL, send it to
+# the clean version instead (301) — so old bookmarks/search results settle on
+# the clean URL too, and there's only ever one canonical address per page.
+# Never applies under /api/ — those endpoints are always called with their
+# literal .php extension (by the forms' action= attributes and by the React
+# dashboard's api.js), and a 301 on a POST drops the request body, which
+# would silently break every form submission and the admin login.
+RewriteCond %{REQUEST_URI} !^/api/
+RewriteCond %{THE_REQUEST} \s/+(.+)\.(html|php)[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+# Pretty journal post URLs: /blog/<slug> -> blog-detail.php?slug=<slug>
+RewriteRule ^blog/([a-zA-Z0-9-]+)/?$ blog-detail.php?slug=$1 [L,QSA]
+
+# Serve the real .php file for a clean-URL request, without changing what's
+# shown in the address bar (e.g. /services quietly serves services.php).
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php [L]
+
+# Fall back to .html for any page not (yet) converted to PHP.
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*)$ $1.html [L]
